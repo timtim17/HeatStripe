@@ -382,7 +382,7 @@ def guiMenu():
     fullEventButton = ttk.Button(mainframe, text='Collect Match Data', default="active", command =lambda: guiDelegator(str(guiEventName.get()), 0)).grid(column=0, row=2, padx=2, pady=2)
     autoButton = ttk.Button(mainframe, text='Collect Auto Data', default="active", command =lambda: guiDelegator(str(guiEventName.get()), 1)).grid(column=1, row=2, padx=2, pady=2)
     stopPointButton = ttk.Button(mainframe, text='Collect Stop Data', default="active", command =lambda: guiDelegator(str(guiEventName.get()), 2)).grid(column=2, row=2, padx=2, pady=2)
-    eventLabel = ttk.Entry(mainframe, textvariable=str(guiEventName)).grid(column=1, row=1, padx=2, pady=3)
+    eventLabel = ttk.Entry(mainframe, textvariable=guiEventName).grid(column=1, row=1, padx=2, pady=3)
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
@@ -445,7 +445,7 @@ def apiErrorGui():
     mainframe = ttk.Frame(root, padding='3 3 12 12', borderwidth=5)
     apiEntryLabel = ttk.Label(mainframe, text="No TBA API Key found, please enter one below:").grid(column=0, row=0)
     saveButton = ttk.Button(mainframe, text='save', default="active", command =lambda: [settingMaker.tbaAppend(apiUserValue.get()), root.destroy()]).grid(column=2, row=2, padx=2, pady=2)
-    apiUserEntry = ttk.Entry(mainframe, width=64, textvariable=str(apiUserValue)).grid(column=0, row=1)
+    apiUserEntry = ttk.Entry(mainframe, width=64, textvariable=apiUserValue).grid(column=0, row=1)
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
@@ -453,24 +453,20 @@ def apiErrorGui():
 
 
 
+def init_root():
+    global root, guiEventName
+    root = Tk()
+    guiEventName = StringVar()
+    root.title("HeatStripe")
 
-root = Tk()
-root.title("HeatStripe")
-guiEventName = StringVar()
+    photo = PhotoImage(file = "g19.png")
+    root.iconphoto(False, photo)
 
-photo = PhotoImage(file = "g19.png")
-root.iconphoto(False, photo)
+init_root()
 
-
-try:
-    if 'Error' in getTBA('status') or header == {'X-TBA-Auth-Key':''} or header == {'X-TBA-Auth-Key':'EDIT ME!'}:
-        g = g
-        
-except:
-    
+if 'Error' in getTBA('status') or header == {'X-TBA-Auth-Key':''} or header == {'X-TBA-Auth-Key':'EDIT ME!'}:
     apiErrorGui()
-    
-    s.close()
-else:
-    guiMenu()
-    s.close()
+    init_root()
+
+guiMenu()
+s.close()

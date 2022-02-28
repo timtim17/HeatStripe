@@ -1,2 +1,5 @@
+.DS_Store
+2019wasnoZebraData.csv
+build/
+dist/
 settings.ini
-__pycache__
