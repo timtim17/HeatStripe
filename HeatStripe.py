@@ -7,8 +7,10 @@
 
 
 
+from email.policy import default
 import requests
 import csv
+from tkinter import filedialog
 from tkinter import *
 from tkinter import ttk
 from configparser import ConfigParser
@@ -100,7 +102,10 @@ def JSONToCSV(event):
     print("collecting match data")
 
     #Create a CSV file with the name based on the event given, and acts as if as its a new file, overwriting anything that may of been there before.
-    with open(event + 'ZebraData.csv', 'w', newline='') as csvFile:
+    filename = filedialog.asksaveasfilename(initialfile=event + 'ZebraData.csv', filetypes=(('CSV', '*.csv'),), defaultextension='csv')
+    if not filename:
+        return
+    with open(filename, 'w', newline='') as csvFile:
         #we create an easy way to write to the CSV, then define what our column names are, along with creating the column names. 
         writer = csv.writer(csvFile)
         writer.writerow(['Team', 'Match', 'Alliance', 'Time', 'X', 'Y']) 
@@ -178,7 +183,10 @@ def JSONToCSVAutos(event):
     print("collecting match data")
 
     #Create a CSV file with the name based on the event given, and acts as if as its a new file, overwriting anything that may of been there before.
-    with open(event + 'ZebraDataAutos.csv', 'w', newline='') as csvFile:
+    filename = filedialog.asksaveasfilename(initialfile=event + 'ZebraDataAutos.csv', filetypes=(('CSV', '*.csv'),), defaultextension='csv')
+    if not filename:
+        return
+    with open(filename, 'w', newline='') as csvFile:
         
         #we create an easy way to write to the CSV, then define what our column names are, along with creating the column names.  
         writer = csv.writer(csvFile)
@@ -262,7 +270,10 @@ def findShooterSpots(event):
     counterMax = c
 
     #Create a CSV file with the name based on the event given, and acts as if as its a new file, overwriting anything that may of been there before.
-    with open(event + 'ZebraShooterLocation.csv', 'w', newline='') as csvFile:
+    filename = filedialog.asksaveasfilename(initialfile=event + 'ZebraShooterLocation.csv', filetypes=(('CSV', '*.csv'),), defaultextension='csv')
+    if not filename:
+        return
+    with open(filename, 'w', newline='') as csvFile:
 
         #we create an easy way to write to the CSV, then define what our column names are, along with creating the column names.
         writer = csv.writer(csvFile)
